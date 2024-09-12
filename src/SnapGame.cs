@@ -5,31 +5,14 @@ using CardGames.GameLogic;
 namespace CardGames
 {
     public class SnapGame
-    {   public static void Main()
-        {
-            //Open the game window
-            SwinGame.OpenGraphicsWindow("Snap!", 860, 500);
-
-			//Load the card images and set their cell details
-            LoadResources();
-            
-			// Create the game!
-			Snap myGame = new Snap ();
-
-            //Run the game loop
-            while(false == SwinGame.WindowCloseRequested())
-            {
-				HandleUserInput (myGame);
-				DrawGame (myGame);
-				UpdateGame (myGame);
-            }
-        }
+    {
         public static void LoadResources()
         {
             Bitmap cards;
             cards = SwinGame.LoadBitmapNamed ("Cards", "Cards.png");
             SwinGame.BitmapSetCellDetails (cards, 82, 110, 13, 5, 53);      // set the cells in the bitmap to match the cards
         }
+
 		/// <summary>
 		/// Respond to the user input -- with requests affecting myGame
 		/// </summary>
@@ -52,12 +35,15 @@ namespace CardGames
 				SwinGame.DrawText ("Player 2 score: " + myGame.Score(1), Color.RoyalBlue, 0, 40);
 				SwinGame.DrawCell (SwinGame.BitmapNamed ("Cards"), top.CardIndex, 350, 50);
 			}
+			
+
 			// Draw the back of the cards... to represent the deck
 			SwinGame.DrawCell (SwinGame.BitmapNamed ("Cards"), 52, 160, 50);
 
 			//Draw onto the screen
 			SwinGame.RefreshScreen(60);
 		}
+		
 		private static void HandleUserInput(Snap myGame)
 		{
 			//Fetch the next batch of UI interaction
@@ -68,10 +54,13 @@ namespace CardGames
 				myGame.Start ();
 			}
 		}
+
 		/// <summary>
 		/// Draws the game to the Window.
 		/// </summary>
 		/// <param name="myGame">The details of the game -- mostly top card and scores.</param>
+		
+
 		/// <summary>
 		/// Updates the game -- it should flip the cards itself once started!
 		/// </summary>
@@ -81,6 +70,24 @@ namespace CardGames
 			myGame.Update(); // just ask the game to do this...
 		}
 
-        
+        public static void Main()
+        {
+            //Open the game window
+            SwinGame.OpenGraphicsWindow("Snap!", 860, 500);
+
+			//Load the card images and set their cell details
+            LoadResources();
+            
+			// Create the game!
+			Snap myGame = new Snap ();
+
+            //Run the game loop
+            while(false == SwinGame.WindowCloseRequested())
+            {
+				HandleUserInput (myGame);
+				DrawGame (myGame);
+				UpdateGame (myGame);
+            }
+        }
     }
 }
